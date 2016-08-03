@@ -1,5 +1,6 @@
 
 import element from 'virtual-element';
+import * as RelBadge from './rel-badge';
 
 export function render({ props }) {
   const { links, onLink } = props;
@@ -16,7 +17,7 @@ export function render({ props }) {
 
   const rows = links.map(link => {
     const classes = link.class ? link.class.map(cls => <span class="c-badge">{rel}</span>) : null;
-    const rels = link.rel.map(rel => <span class="c-badge c-badge--success">{rel}</span>);
+    const rels = link.rel.map(rel => <RelBadge rel={rel} />);
 
     return (
       <tr class="c-table__row">

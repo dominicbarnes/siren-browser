@@ -5,3 +5,7 @@
 .c-nav__content, .c-nav__item {
   position: relative;
 }
+
+.c-badge + .c-badge {
+  margin-left: 5px;
+}

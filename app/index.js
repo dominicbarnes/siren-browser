@@ -23,7 +23,7 @@ export function initialState() {
 export function afterMount(component, el, setState) {
   client.on('error', (error) => setState({ error }));
   client.on('entity', (entity, href) => {
-    console.log('entity', entity.toObject());
+    console.log('entity', href, entity.toObject());
     const item = addHistory(entity, href);
     setState({ item, error: null });
   });

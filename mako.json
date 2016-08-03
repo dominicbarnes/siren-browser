@@ -1,9 +1,17 @@
 {
   "entries": [
-    "index.html"
+    "index.html",
+    "app/**/*.js",
+    "lib/**/*.js"
   ],
   "plugins": [
-    [ "mako-browser", { "sourceMaps": "inline" } ],
-    [ "mako-babel", { "sourceMaps": true } ]
+    [ "mako-stat", [ "html", "js", "css" ] ],
+    [ "mako-buffer", [ "html", "js", "css" ] ],
+    [ "mako-html" ],
+    [ "mako-css" ],
+    [ "mako-babel", { "sourceMaps": true } ],
+    [ "mako-output", [ "html", "js", "css" ] ],
+    [ "mako-copy", [ "html" ] ],
+    [ "mako-write", [ "js", "css" ] ]
   ]
 }
