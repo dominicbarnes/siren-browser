@@ -5,13 +5,7 @@
     "lib/**/*.js"
   ],
   "plugins": [
-    [ "mako-stat", [ "html", "js", "css" ] ],
-    [ "mako-buffer", [ "html", "js", "css" ] ],
-    [ "mako-html" ],
-    [ "mako-css" ],
-    [ "mako-babel", { "sourceMaps": true } ],
-    [ "mako-output", [ "html", "js", "css" ] ],
-    [ "mako-copy", [ "html" ] ],
-    [ "mako-write", [ "js", "css" ] ]
+    "@dominicbarnes/mako-electron",
+    [ "mako-babel", { "sourceMaps": true } ]
   ]
 }
