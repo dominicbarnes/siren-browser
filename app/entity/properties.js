@@ -6,10 +6,8 @@ export function render({ props }) {
 
   if (Object.keys(properties).length === 0) {
     return (
-      <div class="c-alerts">
-        <div class="c-alerts__alert c-alerts__alert--secondary">
-          No properties to show.
-        </div>
+      <div class="c-alert c-alert--warning">
+        No properties to show.
       </div>
     )
   }

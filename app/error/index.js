@@ -6,11 +6,9 @@ export function render({ props }) {
 
   return (
     <div class="u-window-box--large">
-      <div class="c-alerts">
-        <div class="c-alerts__alert c-alerts__alert--error">
-          <button class="c-button c-button--close" onClick={handleClick}>×</button>
-          {error.message}
-        </div>
+      <div class="c-alert c-alert--error">
+        <button class="c-button c-button--close" onClick={handleClick}>×</button>
+        {error.message}
       </div>
     </div>
   );

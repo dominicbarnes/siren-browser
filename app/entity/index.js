@@ -14,7 +14,7 @@ export function afterUpdate({ props }, prevProps, prevState, setState) {
 }
 
 export function render({ props, state }, setState) {
-  const { entity, onLink, onAction } = props;
+  const { entity, onLink, onAction, sub } = props;
   const { tab } = state;
 
   const title = entity.title();
@@ -25,8 +25,8 @@ export function render({ props, state }, setState) {
   const actions = entity.actions();
 
   return (
-    <div class="u-pillar-box--large">
-      <h1 class="c-heading c-heading--large">{title}</h1>
+    <div>
+      {!sub ? <h1 class="c-heading">{title}</h1> : <h2 class="c-heading">{title}</h2>}
       {classes}
       <div class="c-tabs">
         <div class="c-tabs__headings">

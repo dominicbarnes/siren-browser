@@ -9,7 +9,7 @@ export function render({ props }) {
     <Form onSubmit={handleSubmit}>
       <div style="background-color: #adadad; color: white;">
         <InputField
-          class="c-form-element u-window-box--large"
+          class="o-form-element u-window-box--large"
           controlClass="c-field c-field--large"
           controlsClass="c-input-group"
           id="siren-url"

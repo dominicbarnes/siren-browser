@@ -7,10 +7,8 @@ export function render({ props }) {
 
   if (actions.length === 0) {
     return (
-      <div class="c-alerts">
-        <div class="c-alerts__alert c-alerts__alert--secondary">
-          No actions to show.
-        </div>
+      <div class="c-alert c-alert--warning">
+        No actions to show.
       </div>
     );
   }
@@ -40,8 +38,8 @@ export function render({ props }) {
         <h2 class="c-heading c-heading--medium">{title}</h2>
         {classes}
         {children}
-        <div class="c-form-element">
-          <button class="c-button c-button--primary" type="submit">Submit</button>
+        <div class="o-form-element">
+          <button class="c-button c-button--brand" type="submit">Submit</button>
         </div>
       </Form>
     );

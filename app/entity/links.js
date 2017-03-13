@@ -7,10 +7,8 @@ export function render({ props }) {
 
   if (links.length === 0) {
     return (
-      <div class="c-alerts">
-        <div class="c-alerts__alert c-alerts__alert--secondary">
-          No links to show.
-        </div>
+      <div class="c-alert c-alert--warning">
+        No links to show.
       </div>
     )
   }
@@ -22,7 +20,7 @@ export function render({ props }) {
     return (
       <tr class="c-table__row">
         <td class="c-table__cell">
-          <a class="c-link c-link--primary" href={link.href} title={link.href} onClick={followLink}>
+          <a class="c-link c-link--brand" href={link.href} title={link.href} onClick={followLink}>
             {link.title || <span class="c-text--quiet">(untitled)</span>}
           </a>
         </td>

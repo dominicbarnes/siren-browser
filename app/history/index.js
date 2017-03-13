@@ -8,7 +8,7 @@ export function render({ props }) {
     const { href, entity } = item;
 
     return (
-      <li class="c-nav__item c-nav__item--primary" onClick={handleSelect} title={href}>
+      <li class="c-nav__item c-nav__item--brand" onClick={handleSelect} title={href}>
         {entity.title() || href}
       </li>
     );

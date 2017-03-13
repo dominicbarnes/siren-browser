@@ -2,16 +2,15 @@
 import element from 'virtual-element';
 import * as Entity from './';
 
+
 export function render({ props, state }, setState) {
   const { entities, onLink, onAction } = props;
   const { entity } = state;
 
   if (entities.length === 0) {
     return (
-      <div class="c-alerts">
-        <div class="c-alerts__alert c-alerts__alert--secondary">
-          No entities to show.
-        </div>
+      <div class="c-alert c-alert--warning">
+        No entities to show.
       </div>
     )
   }
@@ -32,7 +31,7 @@ export function render({ props, state }, setState) {
           {rels}
         </td>
         <td class="c-table__cell">
-          <button type="button" class="c-button c-button--primary c-button--xsmall" onClick={handleOpen}>Open</button>
+          <button type="button" class="c-button c-button--brand u-xsmall" onClick={handleOpen}>Open</button>
         </td>
       </tr>
     );
@@ -65,13 +64,17 @@ export function render({ props, state }, setState) {
     if (!entity) return null;
 
     return (
-      <div class="c-overlay">
-        <div class="c-modal">
-          <header class="c-modal__header">
-            <button type="button" class="c-button c-button--close" onClick={closeModal}>×</button>
-          </header>
-          <div class="c-modal__body">
-            <Entity entity={entity} onLink={handleLink} onAction={handleAction} />
+      <div>
+        <div class="c-overlay" onClick={closeModal}></div>
+        <div class="o-modal">
+          <div class="c-card">
+            <header class="c-card__header">
+              <button type="button" class="c-button c-button--close" onClick={closeModal}>×</button>
+              <b class="c-heading">Embedded Entity</b>
+            </header>
+            <div class="c-card__body">
+              <Entity entity={entity} onLink={handleLink} onAction={handleAction} sub />
+            </div>
           </div>
         </div>
       </div>
