@@ -1,3 +1,4 @@
+/** @jsx element */
 
 import element from 'virtual-element'
 import { tree, render } from 'deku'

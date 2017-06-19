@@ -1,14 +1,15 @@
+/** @jsx element */
 
 import element from 'virtual-element'
-import Siren from 'siren-client'
 import store from 'store'
+import SirenClient from './siren-client'
+import SirenEntity from './siren-entity'
 import * as Form from './form'
 import * as History from './history'
 import * as Error from './error'
 import * as Entity from './entity'
-import request from 'request'
 
-const client = new Siren()
+const client = new SirenClient()
 const history = getHistory()
 
 export function initialState () {
@@ -41,7 +42,7 @@ export function render ({ state }, setState) {
           <History history={history} onSelect={handleSelect} onClear={handleClear} />
         </div>
         <div class='o-grid__cell'>
-          <div class="u-pillar-box--large">
+          <div class='u-pillar-box--large'>
             {error ? <Error error={error} onClose={handleClose} /> : null}
             {item ? <Entity entity={item.entity} onLink={followLink} onAction={submitAction} /> : null}
           </div>
@@ -58,9 +59,6 @@ export function render ({ state }, setState) {
   function submitAction (action, data) {
     console.log('action', action, data)
     client.submit(action, data)
-
-    // FIXME: if electron fixes this weird HTTP redirect bug, we can remove this weird/ugly hack
-    process.nextTick(ping)
   }
 
   function handleSelect (item) {
@@ -81,7 +79,9 @@ function getHistory () {
   if (!store.enabled) return []
   const history = store.get('history')
   if (!history) return []
-  history.forEach((item) => item.entity = new Siren.Entity(item.entity))
+  history.forEach(function (item) {
+    item.entity = new SirenEntity(item.entity)
+  })
   return history
 }
 
@@ -100,20 +100,4 @@ function removeHistory (item) {
     history.splice(0, history.length) // remove all
   }
   store.set('history', history)
-}
-
-/**
- * Currently, electron has a weird bug with HTTP redirects. Until that is fixed,
- * it seems that making this extra HTTP request off the bat seems to "unclog"
- * the backlog of HTTP requests. Don't ask me why, I don't really get it either.
- *
- * Ideally, this weird "ping" should not need to exist. Also, I've arbitrarily
- * chosen http://example.com/ because this is an electron app, not a server so
- * I can't just request window.location.href but at the same time I'm not sure
- * who else to spam. :(
- *
- * @see https://github.com/electron/electron/issues/7538
- */
-function ping () {
-  request.head('http://example.com/')
 }
