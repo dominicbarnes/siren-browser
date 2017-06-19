@@ -4,10 +4,10 @@ import element from 'virtual-element'
 import store from 'store'
 import SirenClient from './siren-client'
 import SirenEntity from './siren-entity'
-import * as Form from './form'
-import * as History from './history'
+import * as Nav from './nav'
 import * as Error from './error'
 import * as Entity from './entity'
+import * as Start from './start'
 
 const client = new SirenClient()
 const history = getHistory()
@@ -16,10 +16,10 @@ export function initialState () {
   if (history.length > 0) {
     const item = history[history.length - 1]
     console.log('initial entity', item.entity.toObject())
-    return { item }
+    return { item, page: 'entity' }
   }
 
-  return {}
+  return { page: 'start' }
 }
 
 export function afterMount (component, el, setState) {
@@ -32,24 +32,37 @@ export function afterMount (component, el, setState) {
 }
 
 export function render ({ state }, setState) {
-  const { error, item } = state
+  const { error, item, page } = state
 
   return (
     <div class='c-text'>
-      <Form initialValue={item ? item.href : null} onSubmit={followLink} />
-      <div class='o-grid o-grid--no-gutter'>
-        <div class='o-grid__cell o-grid__cell--width-20'>
-          <History history={history} onSelect={handleSelect} onClear={handleClear} />
+      <div class='o-grid o-grid--no-gutter o-panel'>
+        <div class='o-grid__cell--width-15 o-panel-container'>
+          <Nav history={history} active={page} onChange={changeNav} />
         </div>
-        <div class='o-grid__cell'>
-          <div class='u-pillar-box--large'>
-            {error ? <Error error={error} onClose={handleClose} /> : null}
-            {item ? <Entity entity={item.entity} onLink={followLink} onAction={submitAction} /> : null}
-          </div>
+        <div class='o-grid__cell--width-85 o-panel-container u-window-box--medium'>
+          {error ? <Error error={error} onClose={clearError} /> : null}
+          {content()}
         </div>
       </div>
     </div>
   )
+
+  function content () {
+    switch (page) {
+      case 'entity': return <Entity entity={item.entity} onLink={followLink} onAction={submitAction} />
+      case 'history': return <h1>History</h1>
+      case 'start': return <Start onSubmit={followLink} />
+    }
+  }
+
+  function changeNav (page) {
+    setState({ page })
+  }
+
+  function clearError () {
+    setState({ error: null })
+  }
 
   function followLink (url) {
     console.log('link', url)
@@ -59,19 +72,6 @@ export function render ({ state }, setState) {
   function submitAction (action, data) {
     console.log('action', action, data)
     client.submit(action, data)
-  }
-
-  function handleSelect (item) {
-    setState({ item })
-  }
-
-  function handleClear (item) {
-    removeHistory(item)
-    setState({})
-  }
-
-  function handleClose () {
-    setState({ error: null })
   }
 }
 

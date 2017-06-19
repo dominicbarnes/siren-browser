@@ -6,7 +6,7 @@ export function render ({ props }) {
   const { error, onClose } = props
 
   return (
-    <div class='u-window-box--large'>
+    <div class='c-alerts c-alerts--topright'>
       <div class='c-alert c-alert--error'>
         <button class='c-button c-button--close' onClick={handleClick}>×</button>
         {error.message}

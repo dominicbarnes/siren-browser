@@ -34,13 +34,19 @@ export function render ({ props }) {
     })
 
     return (
-      <Form action={href} method={method} onSubmit={handleSubmit}>
-        <h2 class='c-heading c-heading--medium'>{title}</h2>
-        {classes}
-        {children}
-        <div class='o-form-element'>
-          <button class='c-button c-button--brand' type='submit'>Submit</button>
+      <Form class='c-card' action={href} method={method} onSubmit={handleSubmit}>
+        <header class='c-card__header'>
+          <h2 class='c-heading c-heading--medium'>{title}</h2>
+          {classes}
+        </header>
+        <div class='c-card__body'>
+          {children}
         </div>
+        <footer class='c-card__footer'>
+          <div class='o-form-element'>
+            <button class='c-button c-button--brand' type='submit'>Submit</button>
+          </div>
+        </footer>
       </Form>
     )
 
