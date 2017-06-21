@@ -7,7 +7,7 @@ export const defaultProps = {
 }
 
 export function render ({ props }) {
-  const { active, entity, subentity, history, onChange, onUnset } = props
+  const { active, entity, subentity, onChange, onUnset } = props
 
   return (
     <nav class='c-nav o-panel'>
@@ -33,10 +33,7 @@ export function render ({ props }) {
 
   function globalNav () {
     return (
-      <div class='c-nav--bottom'>
-        <div class={classes('history')} onClick={handleChange('history')}><i class='fa fa-history fa-fw' /> History <span class='c-badge c-badge--rounded c-badge--info'>{history.length}</span></div>
-        <div class={classes('start', 'c-nav__item--success')} onClick={handleChange('start')}><i class='fa fa-home fa-fw' /> Start</div>
-      </div>
+      <div class={classes('start', [ 'c-nav--bottom', 'c-nav__item--success' ])} onClick={handleChange('start')}><i class='fa fa-home fa-fw' /> Start</div>
     )
   }
 

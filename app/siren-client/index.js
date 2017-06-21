@@ -98,7 +98,6 @@ class Client extends EventEmitter {
    * @param {window.Response} res  Fetch API response
    */
   handle (res) {
-    console.log(res)
     if (res.headers.get('content-type') !== 'application/vnd.siren+json') {
       return Promise.reject(new Error('did not find a valid siren response'))
     } else {
