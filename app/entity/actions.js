@@ -14,11 +14,11 @@ export function render ({ props }) {
     )
   }
 
-  const rows = actions.map((action) => {
+  const cards = actions.map((action) => {
     const { href, fields, method, title } = action
     const classes = action.class ? action.class.map(cls => <span class='c-badge'>{cls}</span>) : null
 
-    let children = (fields || []).map(field => {
+    let body = (fields || []).map(field => {
       let { name, title, type, value } = field
 
       return (
@@ -37,15 +37,13 @@ export function render ({ props }) {
       <Form class='c-card' action={href} method={method} onSubmit={handleSubmit}>
         <header class='c-card__header'>
           <h2 class='c-heading c-heading--medium'>{title}</h2>
-          {classes}
         </header>
         <div class='c-card__body'>
-          {children}
+          {classes}
+          {body}
         </div>
         <footer class='c-card__footer'>
-          <div class='o-form-element'>
-            <button class='c-button c-button--brand' type='submit'>Submit</button>
-          </div>
+          <button class='c-button c-button--block c-button--brand' type='submit'>Submit</button>
         </footer>
       </Form>
     )
@@ -55,5 +53,19 @@ export function render ({ props }) {
     }
   })
 
-  return <div>{rows}</div>
+  const cells = cards.map(card => {
+    return (
+      <div class='o-grid__cell o-grid__cell--width-33'>
+        <div class='u-window-box--medium'>
+          {card}
+        </div>
+      </div>
+    )
+  })
+
+  return (
+    <div class='o-grid o-grid--wrap o-grid--no-gutter'>
+      {cells}
+    </div>
+  )
 }

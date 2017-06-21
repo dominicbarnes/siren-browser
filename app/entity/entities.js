@@ -1,11 +1,10 @@
 /** @jsx element */
 
 import element from 'virtual-element'
-import * as Entity from './'
+import * as RelBadge from './rel-badge'
 
 export function render ({ props, state }, setState) {
-  const { entities, onLink, onAction } = props
-  const { entity } = state
+  const { entities, onSelect } = props
 
   if (entities.length === 0) {
     return (
@@ -15,83 +14,46 @@ export function render ({ props, state }, setState) {
     )
   }
 
-  const rows = entities.map((entity) => {
+  const cards = entities.map(entity => {
     const classes = entity.class().map(cls => <span class='c-badge'>{cls}</span>)
-    const rels = entity.rel().map(rel => <span class='c-badge c-badge--success'>{rel}</span>)
+    const rels = entity.rel().map(rel => <RelBadge rel={rel} />)
 
     return (
-      <tr class='c-table__row'>
-        <td class='c-table__cell'>
-          {entity.title() || '(untitled)'}
-        </td>
-        <td class='c-table__cell'>
+      <div class='c-card'>
+        <header class='c-card__header'>
+          <h2 class='c-heading'>{entity.title() || '(untitled)'}</h2>
+        </header>
+        <div class='c-card__body'>
           {classes}
-        </td>
-        <td class='c-table__cell'>
           {rels}
-        </td>
-        <td class='c-table__cell'>
-          <button type='button' class='c-button c-button--brand u-xsmall' onClick={handleOpen}>Open</button>
-        </td>
-      </tr>
-    )
-
-    function handleOpen () {
-      setState({ entity })
-    }
-  })
-
-  return (
-    <div>
-      {renderEntity()}
-      <table class='c-table'>
-        <thead class='c-table__head'>
-          <tr class='c-table__row c-table__row--heading'>
-            <th class='c-table__cell'>Entity</th>
-            <th class='c-table__cell'>Classes</th>
-            <th class='c-table__cell'>Relations</th>
-            <th class='c-table__cell' />
-          </tr>
-        </thead>
-        <tbody class='c-table__body'>
-          {rows}
-        </tbody>
-      </table>
-    </div>
-  )
-
-  function renderEntity () {
-    if (!entity) return null
-
-    return (
-      <div>
-        <div class='c-overlay' onClick={closeModal} />
-        <div class='o-modal'>
-          <div class='c-card'>
-            <header class='c-card__header'>
-              <button type='button' class='c-button c-button--close' onClick={closeModal}>×</button>
-              <b class='c-heading'>Embedded Entity</b>
-            </header>
-            <div class='c-card__body'>
-              <Entity entity={entity} onLink={handleLink} onAction={handleAction} sub />
-            </div>
-          </div>
         </div>
+        <footer class='c-card__footer'>
+          <button onClick={selectEntity} class='c-button c-button--block c-button--brand'>Open</button>
+        </footer>
       </div>
     )
 
-    function closeModal () {
-      setState({ entity: null })
+    function selectEntity (e) {
+      if (onSelect) {
+        e.preventDefault()
+        onSelect(entity)
+      }
     }
+  })
 
-    function handleLink (href) {
-      closeModal()
-      if (onLink) onLink(href)
-    }
+  const cells = cards.map(card => {
+    return (
+      <div class='o-grid__cell o-grid__cell--width-33'>
+        <div class='u-window-box--medium'>
+          {card}
+        </div>
+      </div>
+    )
+  })
 
-    function handleAction (action, data) {
-      closeModal()
-      if (onAction) onAction(action, data)
-    }
-  }
+  return (
+    <div class='o-grid o-grid--wrap o-grid--no-gutter'>
+      {cells}
+    </div>
+  )
 }

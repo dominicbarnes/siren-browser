@@ -14,24 +14,23 @@ export function render ({ props }) {
     )
   }
 
-  const rows = links.map(link => {
+  const cards = links.map(link => {
     const classes = link.class ? link.class.map(cls => <span class='c-badge'>{cls}</span>) : null
     const rels = link.rel.map(rel => <RelBadge rel={rel} />)
 
     return (
-      <tr class='c-table__row'>
-        <td class='c-table__cell'>
-          <a class='c-link c-link--brand' href={link.href} title={link.href} onClick={followLink}>
-            {link.title || <span class='c-text--quiet'>(untitled)</span>}
-          </a>
-        </td>
-        <td class='c-table__cell'>
+      <div class='c-card'>
+        <header class='c-card__header'>
+          <h2 class='c-heading'>{link.title || '(untitled)'}</h2>
+        </header>
+        <div class='c-card__body'>
           {classes}
-        </td>
-        <td class='c-table__cell'>
           {rels}
-        </td>
-      </tr>
+        </div>
+        <footer class='c-card__footer'>
+          <a href={link.href} onClick={followLink} class='c-button c-button--block c-button--brand'>Follow</a>
+        </footer>
+      </div>
     )
 
     function followLink (e) {
@@ -42,18 +41,19 @@ export function render ({ props }) {
     }
   })
 
+  const cells = cards.map(card => {
+    return (
+      <div class='o-grid__cell o-grid__cell--width-33'>
+        <div class='u-window-box--medium'>
+          {card}
+        </div>
+      </div>
+    )
+  })
+
   return (
-    <table class='c-table'>
-      <thead class='c-table__head'>
-        <tr class='c-table__row c-table__row--heading'>
-          <th class='c-table__cell'>Link</th>
-          <th class='c-table__cell'>Classes</th>
-          <th class='c-table__cell'>Relations</th>
-        </tr>
-      </thead>
-      <tbody class='c-table__body'>
-        {rows}
-      </tbody>
-    </table>
+    <div class='o-grid o-grid--wrap o-grid--no-gutter'>
+      {cells}
+    </div>
   )
 }
