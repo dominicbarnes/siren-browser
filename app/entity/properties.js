@@ -13,29 +13,27 @@ export function render ({ props }) {
     )
   }
 
-  return table(properties)
+  return tree(properties)
 }
 
-function table (object) {
+function tree (object) {
   const rows = Object.keys(object).sort().map(key => {
     return { key, value: object[key] }
   })
 
   return (
-    <table class='c-table'>
-      <tbody class='c-table__body'>
-        {rows.map(row)}
-      </tbody>
-    </table>
+    <ol class='c-tree'>
+      {rows.map(row)}
+    </ol>
   )
 }
 
 function row ({ key, value }) {
   return (
-    <tr class='c-table__row'>
-      <th class='c-table__cell'>{key}</th>
-      <td class='c-table__cell'>{cell(value)}</td>
-    </tr>
+    <li class='c-tree__item'>
+      <b>{key}:</b>
+      <span>{' '}{cell(value)}</span>
+    </li>
   )
 }
 
@@ -43,7 +41,7 @@ function cell (input) {
   if (!input) {
     return JSON.stringify(input)
   } else if (typeof input === 'object') {
-    return table(input)
+    return tree(input)
   } else {
     return input
   }
