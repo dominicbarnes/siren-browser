@@ -15,6 +15,7 @@
     "electron": "^1.6.11",
     "electron-open-link-in-browser": "^1.0.2",
     "font-awesome": "^4.7.0",
+    "highlight.js": "^9.12.0",
     "is-absolute-url": "^2.0.0",
     "magic-virtual-element": "^1.0.6",
     "mako-babel": "^1.0.0",
