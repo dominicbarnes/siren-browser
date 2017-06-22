@@ -10,6 +10,7 @@ import * as Properties from './entity/properties'
 import * as Links from './entity/links'
 import * as Actions from './entity/actions'
 import * as Entities from './entity/entities'
+import * as Raw from './entity/raw'
 
 const client = new SirenClient()
 
@@ -67,6 +68,7 @@ export function render ({ state }, setState) {
       case 'links': return <Links links={entity.links()} onLink={followLink} />
       case 'actions': return <Actions actions={entity.actions()} onAction={submitAction} />
       case 'entities': return <Entities entities={entity.entities()} onSelect={setSubEntity} />
+      case 'raw': return <Raw entity={entity} />
       case 'start': return <Start initialValue={lastHref} onSubmit={followLink} />
     }
   }

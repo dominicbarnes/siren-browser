@@ -27,6 +27,7 @@
   },
   "scripts": {
     "build": "mako --cache",
+    "watch": "mako --cache --watch",
     "prestart": "npm run build",
     "start": "electron .",
     "lint": "standard",

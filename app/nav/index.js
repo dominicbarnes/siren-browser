@@ -26,6 +26,7 @@ export function render ({ props }) {
         <div class={classes('links')} onClick={handleChange('links')}><i class='fa fa-link fa-fw' /> Links</div>
         <div class={classes('actions')} onClick={handleChange('actions')}><i class='fa fa-flash fa-fw' /> Actions</div>
         <div class={classes('entities')} onClick={handleChange('entities')}><i class='fa fa-sitemap fa-fw' /> Entities</div>
+        {!subentity ? <div class={classes('raw')} onClick={handleChange('raw')}><i class='fa fa-code fa-fw' /> Raw</div> : null}
       </div>
     )
   }
