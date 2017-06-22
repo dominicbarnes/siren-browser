@@ -9,7 +9,7 @@ export function render ({ props }) {
   return (
     <Form onSubmit={handleSubmit}>
       <InputField
-        class='o-form-element u-window-box--large'
+        class='o-form-element'
         controlClass='c-field c-field--large'
         controlsClass='c-input-group'
         id='siren-url'
@@ -22,6 +22,10 @@ export function render ({ props }) {
         required
         type='url'
         value={initialValue} />
+      <button class='c-button c-button--brand u-large' type='submit'>
+        <i class='fa fa-play fa-fw' />
+        {' Start'}
+      </button>
     </Form>
   )
 

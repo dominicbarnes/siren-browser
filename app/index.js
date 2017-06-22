@@ -1,6 +1,7 @@
 /** @jsx element */
 
 import element from 'virtual-element'
+import store from 'store'
 import SirenClient from './siren-client'
 import * as Nav from './nav'
 import * as Error from './error'
@@ -13,24 +14,36 @@ import * as Entities from './entity/entities'
 const client = new SirenClient()
 
 export function initialState () {
-  return { page: 'start' }
+  return {
+    page: 'start',
+    lastHref: store.get('lastHref')
+  }
 }
 
 export function afterMount (component, el, setState) {
   client.on('error', (error) => setState({ error }))
   client.on('entity', (entity, href) => {
+    store.set('lastHref', href)
     console.log('entity', href, entity.toObject())
     setState({
-      entity: entity,
       lastHref: href,
+      entity: entity,
       error: null,
       subentity: null
     })
   })
 }
 
+export function afterUpdate ({ state }, prevProps, prevState, setState) {
+  if (prevState.entity !== state.entity) {
+    setState({ page: 'properties' })
+  } else if (!prevState.subentity && !!state.subentity) {
+    setState({ page: 'properties' })
+  }
+}
+
 export function render ({ state }, setState) {
-  const { error, page, entity, subentity } = state
+  const { page, entity, subentity, error, lastHref } = state
 
   return (
     <div class='c-text'>
@@ -54,7 +67,7 @@ export function render ({ state }, setState) {
       case 'links': return <Links links={entity.links()} onLink={followLink} />
       case 'actions': return <Actions actions={entity.actions()} onAction={submitAction} />
       case 'entities': return <Entities entities={entity.entities()} onSelect={setSubEntity} />
-      case 'start': return <Start onSubmit={followLink} />
+      case 'start': return <Start initialValue={lastHref} onSubmit={followLink} />
     }
   }
 

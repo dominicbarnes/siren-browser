@@ -11,12 +11,12 @@ export function render ({ props }) {
 
   return (
     <nav class='c-nav o-panel'>
-      {entityNav(subentity || entity, !!subentity)}
+      {entityNav(subentity || entity)}
       {globalNav()}
     </nav>
   )
 
-  function entityNav (entity, sub) {
+  function entityNav (entity) {
     if (!entity) return null
 
     return (
@@ -26,14 +26,16 @@ export function render ({ props }) {
         <div class={classes('links')} onClick={handleChange('links')}><i class='fa fa-link fa-fw' /> Links</div>
         <div class={classes('actions')} onClick={handleChange('actions')}><i class='fa fa-flash fa-fw' /> Actions</div>
         <div class={classes('entities')} onClick={handleChange('entities')}><i class='fa fa-sitemap fa-fw' /> Entities</div>
-        {sub ? <div class={classes(true, 'c-nav__item--error')} onClick={onUnset}><i class='fa fa-window-close fa-fw' /> Back to Parent Entity</div> : null}
       </div>
     )
   }
 
   function globalNav () {
     return (
-      <div class={classes('start', [ 'c-nav--bottom', 'c-nav__item--success' ])} onClick={handleChange('start')}><i class='fa fa-home fa-fw' /> Start</div>
+      <div class='c-nav--bottom'>
+        {subentity ? <div class={classes(true, 'c-nav__item--error')} onClick={onUnset}><i class='fa fa-window-close fa-fw' /> Back to Parent Entity</div> : null}
+        <div class={classes('start', 'c-nav__item--success')} onClick={handleChange('start')}><i class='fa fa-map fa-fw' /> Navigate</div>
+      </div>
     )
   }
 
