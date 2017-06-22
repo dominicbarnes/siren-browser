@@ -1,6 +1,6 @@
 /** @jsx element */
 
-import element from 'virtual-element'
+import element from 'magic-virtual-element'
 
 export function render ({ props }) {
   const { properties } = props
@@ -13,36 +13,50 @@ export function render ({ props }) {
     )
   }
 
-  return tree(properties)
+  return tree(properties, 0)
 }
 
-function tree (object) {
-  const rows = Object.keys(object).sort().map(key => {
-    return { key, value: object[key] }
-  })
-
+function tree (input, level) {
   return (
     <ol class='c-tree'>
-      {rows.map(row)}
+      {rows(input).map(r => row(r, level))}
     </ol>
   )
 }
 
-function row ({ key, value }) {
+function row ({ key, value }, level) {
+  const nest = shouldNest(value)
+
+  const classes = {
+    'c-tree__item': true,
+    'c-tree__item--expandable': nest,
+    'c-tree__item--expanded': nest
+  }
+
   return (
-    <li class='c-tree__item'>
+    <li class={classes}>
       <b>{key}:</b>
-      <span>{' '}{cell(value)}</span>
+      <span>{' '}{cell(value, level)}</span>
     </li>
   )
 }
 
-function cell (input) {
-  if (!input) {
-    return JSON.stringify(input)
-  } else if (typeof input === 'object') {
-    return tree(input)
+function rows (input) {
+  if (Array.isArray(input)) {
+    return input.map((value, key) => {
+      return { key, value }
+    })
   } else {
-    return input
+    return Object.keys(input).sort().map(key => {
+      return { key, value: input[key] }
+    })
   }
+}
+
+function cell (input, level) {
+  return shouldNest(input) ? tree(input, level + 1) : input
+}
+
+function shouldNest (input) {
+  return input && typeof input === 'object'
 }

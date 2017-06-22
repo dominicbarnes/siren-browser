@@ -11,3 +11,7 @@
   text-overflow: ellipsis;
   overflow: hidden;
 }
+
+.c-tree__item--expandable:not(.c-tree__item--expanded) .c-tree {
+  display: none;
+}
