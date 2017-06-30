@@ -1,7 +1,7 @@
 /** @jsx element */
 
 import element from 'virtual-element'
-import * as RelBadge from './rel-badge'
+import * as RelBadge from '../rel-badge'
 
 export function render ({ props }) {
   const { links, onLink } = props

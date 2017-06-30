@@ -15,3 +15,7 @@
 .c-tree__item--expandable:not(.c-tree__item--expanded) .c-tree {
   display: none;
 }
+
+.c-badge + .c-badge {
+  margin-left: 3px;
+}

@@ -6,6 +6,7 @@
   "description": "A portable browser for siren hypermedia APIs.",
   "devDependencies": {
     "@dominicbarnes/mako-electron": "^0.1.0",
+    "array-find": "^1.0.0",
     "babel-plugin-syntax-jsx": "^6.8.0",
     "babel-plugin-transform-react-jsx": "^6.8.0",
     "babel-preset-es2015": "^6.9.0",

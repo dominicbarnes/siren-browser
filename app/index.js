@@ -3,14 +3,15 @@
 import element from 'virtual-element'
 import store from 'store'
 import SirenClient from './siren-client'
+
 import * as Nav from './nav'
 import * as Error from './error'
 import * as Start from './start'
-import * as Properties from './entity/properties'
-import * as Links from './entity/links'
-import * as Actions from './entity/actions'
-import * as Entities from './entity/entities'
-import * as Raw from './entity/raw'
+import * as Properties from './properties'
+import * as Links from './links'
+import * as Actions from './actions'
+import * as Entities from './entities'
+import * as Raw from './raw'
 
 const client = new SirenClient()
 
