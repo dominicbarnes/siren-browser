@@ -1,9 +1,10 @@
 /** @jsx element */
 
-import element from 'virtual-element'
+import element from 'magic-virtual-element'
 import store from 'store'
 import SirenClient from './siren-client'
 
+import * as EntityNav from './entity-nav'
 import * as Nav from './nav'
 import * as Error from './error'
 import * as Start from './start'
@@ -49,9 +50,10 @@ export function render ({ state }, setState) {
 
   return (
     <div class='c-text'>
-      <div class='o-grid o-grid--no-gutter o-panel'>
+      {entity ? <Nav entity={entity} onRefresh={refresh} onStart={() => changeNav('start')} /> : null}
+      <div class={[ 'o-grid', 'o-grid--no-gutter', 'o-panel', { 'o-panel--nav-top': !!entity } ]}>
         <div class='o-grid__cell--width-25 o-grid__cell--width-15@large o-panel-container'>
-          <Nav active={page} entity={entity} subentity={subentity} onChange={changeNav} onUnset={unsetSubEntity} />
+          <EntityNav active={page} entity={entity} subentity={subentity} onChange={changeNav} onUnset={unsetSubEntity} />
         </div>
         <div class='o-grid__cell--width-75 o-grid__cell--width-85@large o-panel-container'>
           <div class='o-panel'>
@@ -72,6 +74,10 @@ export function render ({ state }, setState) {
       case 'raw': return <Raw entity={entity} />
       case 'start': return <Start initialValue={lastHref} onSubmit={followLink} />
     }
+  }
+
+  function refresh () {
+    followLink(lastHref)
   }
 
   function changeNav (page) {
