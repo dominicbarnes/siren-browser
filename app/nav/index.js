@@ -9,8 +9,8 @@ export function render ({ props }) {
     <div class='c-nav c-nav--inline c-nav--top'>
       <div class='c-nav__content'>{entity ? entity.title() : null}</div>
       <div class='c-nav__item--right'>
-        <div class='c-nav__item'>
-          <i class='fa fa-refresh' onClick={onRefresh} />
+        <div class='c-nav__item' onClick={onRefresh}>
+          <i class='fa fa-refresh' />
           {' Refresh'}
         </div>
         <div class='c-nav__item c-nav__item--success' onClick={onStart}>

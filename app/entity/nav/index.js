@@ -17,8 +17,6 @@ export function render ({ props }) {
   )
 
   function topNav (entity) {
-    if (!entity) return null
-
     return (
       <div>
         <div class={classes('properties')} onClick={handleChange('properties')}><i class='fa fa-list-alt fa-fw' /> Properties</div>

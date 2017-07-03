@@ -2,7 +2,7 @@
 
 import element from 'virtual-element'
 import isAbsoluteUrl from 'is-absolute-url'
-import open from '../../lib/open'
+import open from '../../../lib/open'
 
 export function render ({ props }) {
   const { rel } = props

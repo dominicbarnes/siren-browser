@@ -4,15 +4,10 @@ import element from 'magic-virtual-element'
 import store from 'store'
 import SirenClient from './siren-client'
 
-import * as EntityNav from './entity-nav'
 import * as Nav from './nav'
 import * as Error from './error'
 import * as Start from './start'
-import * as Properties from './properties'
-import * as Links from './links'
-import * as Actions from './actions'
-import * as Entities from './entities'
-import * as Raw from './raw'
+import * as Entity from './entity'
 
 const client = new SirenClient()
 
@@ -31,47 +26,27 @@ export function afterMount (component, el, setState) {
     setState({
       lastHref: href,
       entity: entity,
+      page: 'entity',
       error: null,
       subentity: null
     })
   })
 }
 
-export function afterUpdate ({ state }, prevProps, prevState, setState) {
-  if (prevState.entity !== state.entity) {
-    setState({ page: 'properties' })
-  } else if (!prevState.subentity && !!state.subentity) {
-    setState({ page: 'properties' })
-  }
-}
-
 export function render ({ state }, setState) {
-  const { page, entity, subentity, error, lastHref } = state
+  const { page, entity, error, lastHref } = state
 
   return (
     <div class='c-text'>
+      {error ? <Error error={error} onClose={clearError} /> : null}
       {entity ? <Nav entity={entity} onRefresh={refresh} onStart={() => changeNav('start')} /> : null}
-      <div class={[ 'o-grid', 'o-grid--no-gutter', 'o-panel', { 'o-panel--nav-top': !!entity } ]}>
-        <div class='o-grid__cell--width-25 o-grid__cell--width-15@large o-panel-container'>
-          <EntityNav active={page} entity={entity} subentity={subentity} onChange={changeNav} onUnset={unsetSubEntity} />
-        </div>
-        <div class='o-grid__cell--width-75 o-grid__cell--width-85@large o-panel-container'>
-          <div class='o-panel'>
-            {error ? <Error error={error} onClose={clearError} /> : null}
-            <div class='u-window-box--medium'>{content(subentity || entity)}</div>
-          </div>
-        </div>
-      </div>
+      {content()}
     </div>
   )
 
-  function content (entity) {
+  function content () {
     switch (page) {
-      case 'properties': return <Properties properties={entity.properties()} />
-      case 'links': return <Links links={entity.links()} onLink={followLink} />
-      case 'actions': return <Actions actions={entity.actions()} onAction={submitAction} />
-      case 'entities': return <Entities entities={entity.entities()} onSelect={setSubEntity} />
-      case 'raw': return <Raw entity={entity} />
+      case 'entity': return <Entity entity={entity} onLink={followLink} onAction={submitAction} />
       case 'start': return <Start initialValue={lastHref} onSubmit={followLink} />
     }
   }
@@ -81,7 +56,7 @@ export function render ({ state }, setState) {
   }
 
   function changeNav (page) {
-    setState({ page })
+    setState({ page, entity: null })
   }
 
   function clearError () {
@@ -96,13 +71,5 @@ export function render ({ state }, setState) {
   function submitAction (action, data) {
     console.log('submitting action', action, data)
     client.submit(action, data)
-  }
-
-  function setSubEntity (subentity) {
-    setState({ subentity })
-  }
-
-  function unsetSubEntity () {
-    setSubEntity(null)
   }
 }
