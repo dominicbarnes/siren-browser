@@ -1,39 +1,33 @@
 {
   "name": "siren-browser",
-  "version": "0.0.0",
   "main": "main.js",
   "private": true,
   "description": "A portable browser for siren hypermedia APIs.",
   "devDependencies": {
     "@dominicbarnes/mako-electron": "^0.1.0",
     "array-find": "^1.0.0",
-    "babel-plugin-syntax-jsx": "^6.8.0",
-    "babel-plugin-transform-react-jsx": "^6.8.0",
+    "babel-helper-vue-jsx-merge-props": "^2.0.2",
+    "babel-plugin-syntax-jsx": "^6.18.0",
+    "babel-plugin-transform-vue-jsx": "^3.4.3",
     "babel-preset-es2015": "^6.9.0",
     "blaze": "^3.2.0",
-    "deku": "^1.0.0",
-    "deku-forms": "^1.6.1",
-    "electron": "^1.7.4",
+    "electron": "^1.6.11",
     "electron-open-link-in-browser": "^1.0.2",
     "font-awesome": "^4.7.0",
     "highlight.js": "^9.12.0",
     "is-absolute-url": "^2.0.0",
-    "magic-virtual-element": "^1.0.6",
     "mako-babel": "^1.0.1",
     "mako-cli": "^2.0.2",
-    "mocha": "^3.4.2",
-    "moment": "^2.18.1",
     "standard": "^10.0.2",
     "store": "^2.0.12",
-    "virtual-element": "^1.2.0"
+    "vue": "^2.3.4"
   },
   "scripts": {
-    "build": "mako --cache",
-    "watch": "mako --cache --watch",
+    "build": "mako",
+    "watch": "mako --watch",
     "prestart": "npm run build",
     "start": "electron .",
-    "lint": "standard",
-    "pretest": "npm run lint",
-    "test": "mocha"
-  }
+    "lint": "standard"
+  },
+  "false": {}
 }

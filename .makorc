@@ -1,7 +1,7 @@
 {
   "entries": [
     "index.html",
-    "app/**/*.js",
+    "client/**/*.js",
     "lib/**/*.js"
   ],
   "plugins": [

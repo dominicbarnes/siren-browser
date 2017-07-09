@@ -6,7 +6,19 @@
     <link rel="stylesheet" type="text/css" href="index.css">
   </head>
   <body>
-    <main></main>
+    <div id="app" class="c-text">
+      <template v-if="error">
+        <Error v-bind:error="error" v-on:close="error = null" />
+      </template>
+
+      <template v-if="!!entity">
+        <Entity v-bind:entity="entity" v-on:link="follow" v-on:action="submit" v-on:refresh="refresh" v-on:start="entity = null" />
+      </template>
+
+      <template v-else>
+        <Start v-bind:href="lastHref" v-on:submit="start" />
+      </template>
+    </div>
     <script src="index.js" type="application/javascript"></script>
   </body>
 </html>

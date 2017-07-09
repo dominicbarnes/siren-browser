@@ -116,6 +116,12 @@ function normalizeMethod (input) {
 
 function params (input) {
   let p = new window.URLSearchParams()
-  Object.keys(input).forEach(key => p.set(key, input[key]))
+  if (input instanceof window.FormData) {
+    for (let [ key, value ] of input.entries()) {
+      p.set(key, value)
+    }
+  } else {
+    Object.keys(input).forEach(key => p.set(key, input[key]))
+  }
   return p
 }

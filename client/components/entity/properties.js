@@ -1,30 +1,36 @@
-/** @jsx element */
 
-import element from 'magic-virtual-element'
+export default {
+  props: {
+    properties: {
+      type: Object,
+      required: true
+    }
+  },
 
-export function render ({ props }) {
-  const { properties } = props
+  render (h) {
+    const { properties } = this.$props
 
-  if (Object.keys(properties).length === 0) {
-    return (
-      <div class='c-alert c-alert--warning'>
-        No properties to show.
-      </div>
-    )
+    if (Object.keys(properties).length === 0) {
+      return (
+        <div class='c-alert c-alert--warning'>
+          No properties to show.
+        </div>
+      )
+    }
+
+    return tree(h, properties, 0)
   }
-
-  return tree(properties, 0)
 }
 
-function tree (input, level) {
+function tree (h, input, level) {
   return (
     <ol class='c-tree'>
-      {rows(input).map(r => row(r, level))}
+      {rows(input).map(r => row(h, r, level))}
     </ol>
   )
 }
 
-function row ({ key, value }, level) {
+function row (h, { key, value }, level) {
   const nest = shouldNest(value)
 
   const classes = {
