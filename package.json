@@ -11,7 +11,7 @@
     "babel-plugin-transform-vue-jsx": "^3.4.3",
     "babel-preset-es2015": "^6.9.0",
     "blaze": "^3.2.0",
-    "electron": "^1.6.11",
+    "electron": "^1.7.4",
     "electron-open-link-in-browser": "^1.0.2",
     "font-awesome": "^4.7.0",
     "highlight.js": "^9.12.0",
@@ -20,7 +20,7 @@
     "mako-cli": "^2.0.2",
     "standard": "^10.0.2",
     "store": "^2.0.12",
-    "vue": "^2.3.4"
+    "vue": "^2.4.1"
   },
   "scripts": {
     "build": "mako",

@@ -51,17 +51,18 @@ class Client extends EventEmitter {
   submit (action, data) {
     let href = action.href
     let method = normalizeMethod(action.method)
+    let params = normalizeData(action, data)
 
     let body = null
     let contentType = null
     if (method === 'GET') {
-      body = params(data)
+      body = urlify(data)
     } else if (action.type === 'application/json') {
       contentType = 'application/json'
-      body = JSON.stringify(data)
+      body = jsonify(data)
     } else {
       contentType = 'application/x-www-form-urlencoded'
-      body = params(data)
+      body = urlify(data)
     }
 
     return this.request(href, method, body, contentType)
@@ -114,14 +115,40 @@ function normalizeMethod (input) {
   return (input || 'get').toUpperCase()
 }
 
-function params (input) {
-  let p = new window.URLSearchParams()
-  if (input instanceof window.FormData) {
-    for (let [ key, value ] of input.entries()) {
-      p.set(key, value)
+function normalizeData (action, data) {
+  let d = new window.FormData()
+
+  for (let field of action.fields) {
+    if (field.value) d.set(field.name, field.value)
+  }
+
+  if (data instanceof window.FormData) {
+    for (let [ key, value ] of data.entries()) {
+      d.set(key, value)
+    }
+  } else if (typeof data === 'object') {
+    for (let key of Object.keys(data)) {
+      d.set(key, data[key])
     }
   } else {
-    Object.keys(input).forEach(key => p.set(key, input[key]))
+    console.warn('unexpected data format', data)
+  }
+
+  return d
+}
+
+function urlify (data) {
+  let p = new window.URLSearchParams()
+  for (let [ key, value ] of data.entries()) {
+    p.set(key, value)
   }
   return p
+}
+
+function jsonify (data) {
+  let o = Object.create(null)
+  for (let [ key, value ] of data.entries()) {
+    p.set(key, value)
+  }
+  return JSON.stringify(o)
 }
