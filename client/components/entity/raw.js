@@ -2,6 +2,12 @@
 import Entity from '../../siren-entity'
 import hljs from 'highlight.js'
 
+const template = `
+<pre>
+  <code class="json" v-html="code"></code>
+</pre>
+`
+
 export default {
   props: {
     entity: {
@@ -10,14 +16,12 @@ export default {
     }
   },
 
-  render () {
-    const { entity } = this.$props
+  template: template,
 
-    return (
-      <pre>
-        <code class='json'>{JSON.stringify(entity.toObject(), null, 2)}</code>
-      </pre>
-    )
+  computed: {
+    code () {
+      return JSON.stringify(this.entity.toObject(), null, 2)
+    }
   },
 
   mounted () {

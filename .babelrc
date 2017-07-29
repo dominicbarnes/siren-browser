@@ -1,9 +1,5 @@
 {
   "presets": [
     "es2015"
-  ],
-  "plugins": [
-    [ "syntax-jsx" ],
-    [ "transform-vue-jsx" ]
   ]
 }
