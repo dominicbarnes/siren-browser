@@ -30,7 +30,7 @@ const template = `
           <properties v-if="active === 'properties'" v-bind:properties="current.properties()" />
           <links v-else-if="active === 'links'" v-bind:links="current.links()" v-on:link="follow" />
           <actions v-else-if="active === 'actions'" v-bind:actions="current.actions()" v-on:action="submit" />
-          <entities v-else-if="active === 'entities'" v-bind:entities="current.entities()" v-on:change="setSubEntity" />
+          <entities v-else-if="active === 'entities'" v-bind:entities="current.entities()" v-on:change="setSubEntity" v-on:link="follow" />
           <raw v-else-if="active === 'raw'" v-bind:entity="entity" />
           <div v-else class="c-alert c-alert--error">Unknown Page {{ active }}</div>
         </div>

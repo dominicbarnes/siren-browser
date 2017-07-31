@@ -38,7 +38,11 @@ class Client extends EventEmitter {
    * @return {Promise}     The entity from the response.
    */
   follow (link) {
-    return this.get(link.href)
+    if (typeof link.href === 'function') {
+      return this.get(link.href())
+    } else {
+      return this.get(link.href)
+    }
   }
 
   /**
@@ -56,13 +60,13 @@ class Client extends EventEmitter {
     let body = null
     let contentType = null
     if (method === 'GET') {
-      body = urlify(data)
+      href += '?' + urlify(params)
     } else if (action.type === 'application/json') {
       contentType = 'application/json'
-      body = jsonify(data)
+      body = jsonify(params)
     } else {
       contentType = 'application/x-www-form-urlencoded'
-      body = urlify(data)
+      body = urlify(params)
     }
 
     return this.request(href, method, body, contentType)

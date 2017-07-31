@@ -4,7 +4,7 @@ import RelBadge from './rel-badge'
 const template = `
 <div>
   <div v-if="empty" class="c-alert c-alert--warning">
-    No actions to show.
+    No embedded entities to show.
   </div>
 
   <div class="o-grid o-grid--wrap o-grid--no-gutter">
@@ -18,10 +18,9 @@ const template = `
             <span v-for="cls in entity.class" class="c-badge">{{ cls }}</span>
             <rel-badge v-for="rel in entity.rel()" v-bind:rel="rel" />
           </div>
-          <footer class="c-card__footer">
-            <button v-on:click="change(entity)" class="c-button c-button--block c-button--brand">
-              Open
-            </button>
+          <footer class="c-card__footer c-input-group">
+            <button v-on:click="change(entity)" class="c-button c-button--block c-button--brand">Open</button>
+            <a v-if="!!entity.href()" v-bind:href="entity.href()" v-on:click.prevent="follow(entity)" class="c-button c-button--block c-button--brand">Follow</a>
           </footer>
         </div>
       </div>
@@ -47,6 +46,10 @@ export default {
   },
 
   methods: {
+    follow (entity) {
+      this.$emit('link', entity)
+    },
+
     change (entity) {
       this.$emit('change', entity)
     }

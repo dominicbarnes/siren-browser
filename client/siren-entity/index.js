@@ -57,6 +57,15 @@ Entity.prototype.rel = function () {
 }
 
 /**
+ * Get the URL ref for this entity. (only relevant for embedded entities)
+ *
+ * @return {String}
+ */
+Entity.prototype.href = function () {
+  return this.data.href || ''
+}
+
+/**
  * Find the first entity matching the given `search` criteria.
  *
  * @see matchEntity

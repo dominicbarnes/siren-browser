@@ -14,12 +14,12 @@ export default {
     const { rel } = this.$props
 
     if (isAbsoluteUrl(rel)) {
-      const attrs = {
-        href: rel,
+      const data = {
+        attrs: { href: rel },
         'class': 'c-badge c-badge--brand',
         on: { click: open }
       }
-      return h('a', attrs, [ rel ])
+      return h('a', data, [ rel ])
     } else {
       return h('span', { 'class': 'c-badge c-badge--success' }, [ rel ])
     }
